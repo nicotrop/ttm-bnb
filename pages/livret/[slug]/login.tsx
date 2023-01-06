@@ -3,9 +3,9 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
-import { useAccessToken } from "../../../hooks/accessTokenProvider";
+import { useAccessToken } from "../../../providers/accessTokenProvider";
 
-const HebergementHome = () => {
+const LivretLogin = () => {
   const [password, setPassword] = useState<string>("");
   const [accessToken, setAccessToken] = useAccessToken();
 
@@ -20,9 +20,8 @@ const HebergementHome = () => {
         `http://localhost:8000/hebergements/login/${slug}`,
         { password }
       );
-      console.log("data: ", data);
-      setAccessToken(data.accessToken);
-      console.log("accessToken: ", accessToken);
+      setAccessToken(data.accessToken); //Unable to set accessToken
+      router.push(`/livret/${slug}/`);
     } catch (error: any) {
       console.log("error: ", error.message);
     }
@@ -54,6 +53,7 @@ const HebergementHome = () => {
           type="password"
           name="password"
           placeholder="Password"
+          value={password || ""}
           onChange={handleChange}
         />
         <button
@@ -67,4 +67,4 @@ const HebergementHome = () => {
   );
 };
 
-export default HebergementHome;
+export default LivretLogin;
