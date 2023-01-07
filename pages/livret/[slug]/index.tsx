@@ -17,7 +17,8 @@ const LivretHome = () => {
   if (isLoading) return <div>loading...</div>;
   if (error) return <div>{error.message}</div>;
 
-  //   console.log(accessToken); accessToken is undefined
+  console.log(accessToken);
+  console.log(setAccessToken);
 
   return (
     <div className="max-w-lg m-auto flex flex-col gap-2 items-center p-4">

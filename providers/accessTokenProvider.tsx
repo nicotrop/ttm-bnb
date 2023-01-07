@@ -10,6 +10,7 @@ export const AccessTokenProvider = ({
   children: React.ReactNode;
 }) => {
   const [accessToken, setAccessToken] = useState("");
+
   return (
     <AccessTokenContext.Provider value={[accessToken, setAccessToken]}>
       {children}

@@ -9,6 +9,11 @@ const LivretLogin = () => {
   const [password, setPassword] = useState<string>("");
   const [accessToken, setAccessToken] = useAccessToken();
 
+  const router = useRouter();
+  const { slug } = router.query;
+  const address = `http://localhost:8000/hebergements/getID/${slug}`;
+  const fetcher = async (url: string) =>
+    await axios.get(url).then((res) => res.data);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
@@ -17,21 +22,18 @@ const LivretLogin = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `http://localhost:8000/hebergements/login/${slug}`,
+        `http://localhost:3000/api/hebergement/login/${slug}`,
         { password }
       );
-      setAccessToken(data.accessToken); //Unable to set accessToken
-      router.push(`/livret/${slug}/`);
+      console.log("data: ", data);
+
+      //   setAccessToken(data.token); //Unable to set accessToken
+      //   router.push(`/livret/${slug}/`);
     } catch (error: any) {
       console.log("error: ", error.message);
     }
   };
 
-  const router = useRouter();
-  const { slug } = router.query;
-  const address = `http://localhost:8000/hebergements/getID/${slug}`;
-  const fetcher = async (url: string) =>
-    await axios.get(url).then((res) => res.data);
   const { isLoading, data, error } = useSWR(address, fetcher);
 
   if (isLoading) return <div>loading...</div>;
